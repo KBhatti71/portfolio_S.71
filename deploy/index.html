@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Studio 71 · Dakotta Bhatti</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+<link rel="stylesheet" href="s71/styles.css" />
+
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+
+<script type="text/babel" src="tweaks-panel.jsx"></script>
+<script type="text/babel" src="s71/shared.jsx"></script>
+<script type="text/babel" src="s71/home.jsx"></script>
+<script type="text/babel" src="s71/portfolio.jsx"></script>
+<script type="text/babel" src="s71/project.jsx"></script>
+<script type="text/babel" src="s71/about.jsx"></script>
+<script type="text/babel" src="s71/contact.jsx"></script>
+</head>
+<body>
+<div id="root"></div>
+
+<script type="text/babel" data-presets="react">
+const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
+  "yellow": "#E2A228",
+  "purpleDepth": 0.5,
+  "displayFont": "Orbitron",
+  "showCornerInfo": true
+}/*EDITMODE-END*/;
+
+const FONT_OPTIONS = [
+  { value: 'Orbitron', label: 'Orbitron (default)' },
+  { value: 'Space Grotesk', label: 'Space Grotesk' },
+  { value: 'Bricolage Grotesque', label: 'Bricolage' },
+  { value: 'Archivo', label: 'Archivo' },
+];
+
+function App() {
+  const [page, setPage] = React.useState('home');
+  const [projectId, setProject] = React.useState('s71');
+  const [t, setTweak] = useTweaks(TWEAK_DEFAULTS);
+
+  // Scroll to top on page change
+  React.useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'instant' });
+  }, [page, projectId]);
+
+  // Apply tweaks
+  React.useEffect(() => {
+    const r = document.documentElement.style;
+    r.setProperty('--yellow', t.yellow);
+    // Subtly shift purple depth — darker or richer
+    const depth = t.purpleDepth ?? 0.5;
+    const purple = `oklch(${0.17 + (0.5 - depth) * 0.06} 0.08 285)`;
+    r.setProperty('--purple', purple);
+    r.setProperty('--display', `'${t.displayFont}', 'Orbitron', system-ui, sans-serif`);
+    document.body.classList.toggle('hide-corner-info', !t.showCornerInfo);
+
+    // Load extra font if needed
+    if (t.displayFont !== 'Orbitron' && !document.getElementById(`f-${t.displayFont}`)) {
+      const link = document.createElement('link');
+      link.id = `f-${t.displayFont}`;
+      link.rel = 'stylesheet';
+      link.href = `https://fonts.googleapis.com/css2?family=${t.displayFont.replace(/ /g, '+')}:wght@500;600;700;800&display=swap`;
+      document.head.appendChild(link);
+    }
+  }, [t]);
+
+  let PageComp;
+  switch (page) {
+    case 'portfolio': PageComp = <PortfolioPage setPage={setPage} setProject={setProject} />; break;
+    case 'project':   PageComp = <ProjectPage setPage={setPage} projectId={projectId} setProject={setProject} />; break;
+    case 'about':     PageComp = <AboutPage setPage={setPage} />; break;
+    case 'contact':   PageComp = <ContactPage setPage={setPage} />; break;
+    default:          PageComp = <HomePage setPage={setPage} setProject={setProject} />;
+  }
+
+  return (
+    <>
+      <SkipLink />
+      <Nav page={page === 'project' ? 'portfolio' : page} setPage={setPage} />
+      <main id="main-content">
+        <div key={page + projectId}>{PageComp}</div>
+      </main>
+      <Footer setPage={setPage} />
+
+      <TweaksPanel title="Tweaks" noDeckControls>
+        <TweakSection label="brand">
+          <TweakColor label="accent"
+            value={t.yellow}
+            options={['#E2A228', '#ED3D35', '#6cc26a', '#5b8def']}
+            onChange={v => setTweak('yellow', v)} />
+          <TweakSlider label="purple depth"
+            value={t.purpleDepth} min={0} max={1} step={0.05}
+            onChange={v => setTweak('purpleDepth', v)} />
+        </TweakSection>
+        <TweakSection label="type">
+          <TweakSelect label="display font"
+            value={t.displayFont}
+            options={FONT_OPTIONS}
+            onChange={v => setTweak('displayFont', v)} />
+        </TweakSection>
+        <TweakSection label="content">
+          <TweakToggle label="corner annotations"
+            value={t.showCornerInfo}
+            onChange={v => setTweak('showCornerInfo', v)} />
+        </TweakSection>
+      </TweaksPanel>
+
+      <style>{`
+        body.hide-corner-info .s71-hero-index,
+        body.hide-corner-info .s71-nav-tag { display: none; }
+      `}</style>
+    </>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+</script>
+
+</body>
+</html>
