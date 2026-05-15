@@ -1,5 +1,7 @@
 // s71-portfolio.jsx — Portfolio page: Five Doors direction
 
+const _portKey = (fn) => (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); fn(); } };
+
 function PortfolioPage({ setPage, setProject }) {
   const [openDoor, setOpenDoor] = React.useState(null);
 
@@ -75,9 +77,12 @@ function PortfolioPage({ setPage, setProject }) {
         <div className="mosaic-grid">
           {PROJECTS.map((p, i) => (
             <div key={p.id} className={`mosaic-item ${i === 0 ? 'big' : ''}`}
-              onClick={() => { setProject(p.id); setPage('project'); }}>
+              role="button" tabIndex={0}
+              aria-label={`View project: ${p.title} — ${p.kind}, ${p.year}`}
+              onClick={() => { setProject(p.id); setPage('project'); }}
+              onKeyDown={_portKey(() => { setProject(p.id); setPage('project'); })}>
               <Thumb project={p} ratio={i === 0 ? '16/10' : '4/3'} large={i === 0} />
-              <div className="mosaic-meta">
+              <div className="mosaic-meta" aria-hidden="true">
                 <CatChip cat={p.cat} />
                 <span className="mosaic-year">'{String(p.year).slice(-2)}</span>
               </div>

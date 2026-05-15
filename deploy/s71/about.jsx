@@ -89,10 +89,10 @@ function AboutPage({ setPage }) {
           <div className="timeline-spine" />
           {TIMELINE.map((e, i) => (
             <div key={i} className={`tl-event kind-${e.kind}`}>
-              <div className="tl-dot" />
-              <div className="tl-year">{e.year}</div>
+              <div className="tl-dot" aria-hidden="true" />
+              <div className="tl-year" aria-hidden="true">{e.year}</div>
               <div className="tl-card">
-                <div className="tl-tag">{e.tag}</div>
+                <div className="tl-tag"><span className="sr-only">{e.year} — </span>{e.tag}</div>
                 <div className="tl-label">{e.label}</div>
                 <div className="tl-place">{e.place}</div>
               </div>

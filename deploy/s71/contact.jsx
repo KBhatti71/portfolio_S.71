@@ -10,7 +10,15 @@ const PROJECT_KINDS = [
   'Something else',
 ];
 
-const DAYS = ['M', 'T', 'W', 'T', 'F', 'S', 'S'];
+const DAYS = [
+  { abbr: 'M', label: 'Monday' },
+  { abbr: 'T', label: 'Tuesday' },
+  { abbr: 'W', label: 'Wednesday' },
+  { abbr: 'T', label: 'Thursday' },
+  { abbr: 'F', label: 'Friday' },
+  { abbr: 'S', label: 'Saturday' },
+  { abbr: 'S', label: 'Sunday' },
+];
 
 function ContactPage({ setPage }) {
   const [picked, setPicked] = React.useState({ day: 12, time: '11:00' });
@@ -74,11 +82,12 @@ function ContactPage({ setPage }) {
           </label>
 
           <div className="field">
-            <span className="field-label">Project kind</span>
-            <div className="kind-chips">
+            <span className="field-label" id="kind-label">Project kind</span>
+            <div className="kind-chips" role="group" aria-labelledby="kind-label">
               {PROJECT_KINDS.map(k => (
                 <button key={k} type="button"
                   className={`kind-chip ${form.kind === k ? 'active' : ''}`}
+                  aria-pressed={form.kind === k}
                   onClick={() => setForm(f => ({ ...f, kind: k }))}>
                   {k}
                 </button>
@@ -104,17 +113,17 @@ function ContactPage({ setPage }) {
               <div className="cal-title">March 2026 · PST</div>
             </div>
             <div className="cal-nav">
-              <button>‹</button>
-              <button>›</button>
+              <button aria-label="Previous month">‹</button>
+              <button aria-label="Next month">›</button>
             </div>
           </div>
 
-          <div className="cal-days">
-            {DAYS.map((d, i) => <div key={i} className="cal-dow">{d}</div>)}
+          <div className="cal-days" aria-hidden="true">
+            {DAYS.map((d, i) => <div key={i} className="cal-dow" title={d.label}>{d.abbr}</div>)}
           </div>
           <div className="cal-grid">
             {/* offset: month starts on a Sunday in 2026 March (so Mon=2nd) — we just fake 3 blanks */}
-            {[0, 0, 0].map((_, i) => <div key={'b' + i} />)}
+            {[0, 0, 0].map((_, i) => <div key={'b' + i} aria-hidden="true" />)}
             {Array.from({ length: 31 }).map((_, i) => {
               const day = i + 1;
               const avail = availableDays.includes(day);
@@ -124,6 +133,8 @@ function ContactPage({ setPage }) {
                 <button key={day}
                   disabled={!avail}
                   className={`cal-day ${isPicked ? 'picked' : ''} ${isToday ? 'today' : ''} ${avail ? 'avail' : 'na'}`}
+                  aria-label={`March ${day}${isToday ? ', today' : ''}${!avail ? ', unavailable' : ''}`}
+                  aria-pressed={avail ? isPicked : undefined}
                   onClick={() => setPicked(p => ({ ...p, day, time: (slotsByDay[day] || [])[0] || null }))}>
                   {day}
                 </button>
@@ -140,6 +151,8 @@ function ContactPage({ setPage }) {
               {slots.length ? slots.map(s => (
                 <button key={s}
                   className={`cal-slot ${picked.time === s ? 'picked' : ''}`}
+                  aria-label={`${s} PST`}
+                  aria-pressed={picked.time === s}
                   onClick={() => setPicked(p => ({ ...p, time: s }))}>
                   {s}
                 </button>
@@ -257,7 +270,7 @@ function ContactPage({ setPage }) {
           font-size: 15px;
           transition: border-color .2s, background .2s;
         }
-        .field-input::placeholder { color: rgba(255,255,255,0.3); }
+        .field-input::placeholder { color: rgba(255,255,255,0.5); }
         .field-input:focus {
           outline: none;
           border-color: var(--yellow);

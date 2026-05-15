@@ -1,5 +1,7 @@
 // s71-home.jsx — Home page: Mega Wordmark direction, mid-fi
 
+const _homeKey = (fn) => (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); fn(); } };
+
 function HomePage({ setPage, setProject }) {
   const featured = PROJECTS.find(p => p.id === 's71');
   return (
@@ -33,9 +35,13 @@ function HomePage({ setPage, setProject }) {
         </div>
 
         {/* featured tile floating bottom-right of hero */}
-        <div className="s71-hero-feature" onClick={() => { setProject('s71'); setPage('project'); }}>
+        <div className="s71-hero-feature"
+          role="button" tabIndex={0}
+          aria-label="View featured project: Studio 71 brand guidelines"
+          onClick={() => { setProject('s71'); setPage('project'); }}
+          onKeyDown={_homeKey(() => { setProject('s71'); setPage('project'); })}>
           <Thumb project={featured} ratio="3/2" large />
-          <div className="s71-hero-feature-label">
+          <div className="s71-hero-feature-label" aria-hidden="true">
             <span>↳ Featured · Studio 71 brand guidelines</span>
             <span className="arrow">→</span>
           </div>
@@ -60,12 +66,15 @@ function HomePage({ setPage, setProject }) {
           {CATS.map((c, i) => (
             <div key={c.slug} className="s71-strip-cell"
               style={{ '--cat-color': c.color }}
-              onClick={() => setPage('portfolio')}>
-              <div className="cell-k">{c.k}</div>
-              <div className="cell-bar" />
+              role="button" tabIndex={0}
+              aria-label={`${c.t} — view in portfolio`}
+              onClick={() => setPage('portfolio')}
+              onKeyDown={_homeKey(() => setPage('portfolio'))}>
+              <div className="cell-k" aria-hidden="true">{c.k}</div>
+              <div className="cell-bar" aria-hidden="true" />
               <div className="cell-title">{c.t}</div>
               <div className="cell-sub">{c.s}</div>
-              <div className="cell-arrow">→</div>
+              <div className="cell-arrow" aria-hidden="true">→</div>
             </div>
           ))}
         </div>
@@ -81,9 +90,12 @@ function HomePage({ setPage, setProject }) {
         <div className="s71-recent-grid">
           {PROJECTS.slice(0, 6).map(p => (
             <div key={p.id} className="s71-recent-item"
-              onClick={() => { setProject(p.id); setPage('project'); }}>
+              role="button" tabIndex={0}
+              aria-label={`View project: ${p.title} — ${p.kind}, ${p.year}`}
+              onClick={() => { setProject(p.id); setPage('project'); }}
+              onKeyDown={_homeKey(() => { setProject(p.id); setPage('project'); })}>
               <Thumb project={p} ratio="4/3" />
-              <div className="recent-meta">
+              <div className="recent-meta" aria-hidden="true">
                 <CatChip cat={p.cat} />
                 <span className="recent-year">{p.year}</span>
               </div>

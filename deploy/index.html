@@ -83,8 +83,11 @@ function App() {
 
   return (
     <>
+      <SkipLink />
       <Nav page={page === 'project' ? 'portfolio' : page} setPage={setPage} />
-      <div key={page + projectId}>{PageComp}</div>
+      <main id="main-content">
+        <div key={page + projectId}>{PageComp}</div>
+      </main>
       <Footer setPage={setPage} />
 
       <TweaksPanel title="Tweaks" noDeckControls>

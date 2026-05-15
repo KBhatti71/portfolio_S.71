@@ -40,24 +40,30 @@ const NAV_PAGES = [
   { id: 'contact',  label: 'Get in Touch' },
 ];
 
+// ── Skip link ───────────────────────────────────────────────────────────
+function SkipLink() {
+  return <a href="#main-content" className="s71-skip-link">Skip to main content</a>;
+}
+
 // ── Site nav ────────────────────────────────────────────────────────────
 function Nav({ page, setPage }) {
   return (
     <header className="s71-nav">
-      <button className="s71-nav-brand" onClick={() => setPage('home')}>
-        <span className="brand-studio">Studio</span>
-        <span className="brand-71">71</span>
+      <button className="s71-nav-brand" onClick={() => setPage('home')} aria-label="Studio 71 — go to home">
+        <span className="brand-studio" aria-hidden="true">Studio</span>
+        <span className="brand-71" aria-hidden="true">71</span>
       </button>
-      <nav className="s71-nav-links">
+      <nav className="s71-nav-links" aria-label="Primary navigation">
         {NAV_PAGES.map(p => (
           <button key={p.id}
             className={`s71-nav-link ${page === p.id ? 'active' : ''}`}
-            onClick={() => setPage(p.id)}>
+            onClick={() => setPage(p.id)}
+            aria-current={page === p.id ? 'page' : undefined}>
             {p.label}
           </button>
         ))}
       </nav>
-      <div className="s71-nav-tag">CAPTURE · DESIGN · DELIVER</div>
+      <div className="s71-nav-tag" aria-hidden="true">CAPTURE · DESIGN · DELIVER</div>
     </header>
   );
 }
@@ -119,12 +125,12 @@ function Thumb({ project, ratio = '4/3', style, large }) {
   if (!p) return null;
   return (
     <div className="s71-thumb" style={{ aspectRatio: ratio, '--thumb-accent': p.accent, ...style }}>
-      <div className="s71-thumb-bg" />
+      <div className="s71-thumb-bg" aria-hidden="true" />
       <div className="s71-thumb-meta">
         <div className="s71-thumb-kind">{p.kind}</div>
         <div className={large ? 's71-thumb-title-lg' : 's71-thumb-title'}>{p.title}</div>
       </div>
-      <div className="s71-thumb-year">'{String(p.year).slice(-2)}</div>
+      <div className="s71-thumb-year" aria-hidden="true">'{String(p.year).slice(-2)}</div>
     </div>
   );
 }
@@ -147,4 +153,4 @@ function SectionHead({ eyebrow, title, sub, align = 'left' }) {
   );
 }
 
-Object.assign(window, { S71, CATS, PROJECTS, NAV_PAGES, Nav, Footer, Btn, Thumb, CatChip, SectionHead });
+Object.assign(window, { S71, CATS, PROJECTS, NAV_PAGES, SkipLink, Nav, Footer, Btn, Thumb, CatChip, SectionHead });

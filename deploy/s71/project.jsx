@@ -62,11 +62,12 @@ function ProjectPage({ setPage, projectId, setProject }) {
             </div>
 
             <div className="project-share">
-              <span className="share-label">Share →</span>
-              <button>𝕏</button>
-              <button>in</button>
-              <button>✉</button>
-              <button>⌘C</button>
+              <span className="share-label" aria-hidden="true">Share →</span>
+              <span className="sr-only">Share this project:</span>
+              <button aria-label="Share on X (Twitter)">𝕏</button>
+              <button aria-label="Share on LinkedIn">in</button>
+              <button aria-label="Share via email">✉</button>
+              <button aria-label="Copy link">⌘C</button>
             </div>
           </div>
         </aside>
