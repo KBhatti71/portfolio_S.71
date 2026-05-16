@@ -19,10 +19,10 @@ const SKILLS = [
 ];
 
 const PLATFORMS = [
-  { name: 'YouTube', handle: '@Studios-71', tag: 'Studio 71 video work', color: '#FF0033' },
-  { name: 'Vimeo',   handle: 'studio 71',   tag: 'Reels & shorts',       color: '#1ab7ea' },
-  { name: 'LinkedIn',handle: 'dakottabhatti',tag: 'Professional',         color: '#0a66c2' },
-  { name: 'WordPress',handle:'studios71.com', tag:'Client sites',         color: '#21759b' },
+  { name: 'YouTube',   handle: '@Studios-71',   tag: 'Studio 71 video work', color: '#FF0033', url: 'https://youtube.com/@Studios-71' },
+  { name: 'Vimeo',     handle: 'studio 71',     tag: 'Reels & shorts',       color: '#1ab7ea', url: 'https://vimeo.com' },
+  { name: 'LinkedIn',  handle: 'dakottabhatti', tag: 'Professional',         color: '#0a66c2', url: 'https://linkedin.com/in/dakottabhatti' },
+  { name: 'WordPress', handle: 'studios71.com', tag: 'Client sites',         color: '#21759b', url: 'https://studios71.com' },
 ];
 
 function AboutPage({ setPage }) {
@@ -128,7 +128,8 @@ function AboutPage({ setPage }) {
         />
         <div className="platforms-grid">
           {PLATFORMS.map(p => (
-            <a key={p.name} className="platform-card" href="#"
+            <a key={p.name} className="platform-card" href={p.url}
+              target="_blank" rel="noopener noreferrer"
               style={{ '--platform-color': p.color }}>
               <div className="platform-icon">{p.name.slice(0, 2).toUpperCase()}</div>
               <div className="platform-meta">

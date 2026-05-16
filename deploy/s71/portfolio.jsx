@@ -5,11 +5,11 @@ const _portKey = (fn) => (e) => { if (e.key === 'Enter' || e.key === ' ') { e.pr
 function PortfolioPage({ setPage, setProject }) {
   const [openDoor, setOpenDoor] = React.useState(null);
 
-  const projectsByCategory = React.useMemo(() => {
+  const projectsByCategory = (() => {
     const map = {};
     CATS.forEach(c => { map[c.slug] = PROJECTS.filter(p => p.cat === c.slug); });
     return map;
-  }, []);
+  })();
 
   return (
     <div className="s71-page portfolio">

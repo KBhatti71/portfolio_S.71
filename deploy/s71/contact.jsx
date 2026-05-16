@@ -20,9 +20,15 @@ const DAYS = [
   { abbr: 'S', label: 'Sunday' },
 ];
 
+const DOW = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+function dayName(year, month, day) {
+  return DOW[new Date(year, month - 1, day).getDay()];
+}
+
 function ContactPage({ setPage }) {
   const [picked, setPicked] = React.useState({ day: 12, time: '11:00' });
   const [form, setForm] = React.useState({ name: '', company: '', kind: '', message: '' });
+  const [booked, setBooked] = React.useState(false);
 
   // a small fake month
   const today = 10;
@@ -144,7 +150,7 @@ function ContactPage({ setPage }) {
 
           <div className="cal-slots-wrap">
             <div className="slots-head">
-              <span>Thu Mar {picked.day} — slots</span>
+              <span>{dayName(2026, 3, picked.day)} Mar {picked.day} — slots</span>
               <span className="slots-count">{slots.length} avail.</span>
             </div>
             <div className="cal-slots">
@@ -161,16 +167,26 @@ function ContactPage({ setPage }) {
           </div>
 
           <div className="cal-summary">
-            <div>
-              <div className="cs-eyebrow">Booking</div>
-              <div className="cs-line">
-                {picked.time ? `Thu Mar ${picked.day} · ${picked.time} PST` : 'Pick a slot →'}
+            {booked ? (
+              <div className="cal-booked" role="status">
+                <div className="cs-eyebrow">Confirmed ✓</div>
+                <div className="cs-line">{dayName(2026, 3, picked.day)} Mar {picked.day} · {picked.time} PST</div>
+                <div className="cs-sub">You'll receive a calendar invite shortly.</div>
               </div>
-              <div className="cs-sub">20 minutes · video call</div>
-            </div>
-            <Btn primary icon="→" onClick={() => alert('In a real build this would confirm the booking.')}>
-              Book the call
-            </Btn>
+            ) : (
+              <>
+                <div>
+                  <div className="cs-eyebrow">Booking</div>
+                  <div className="cs-line">
+                    {picked.time ? `${dayName(2026, 3, picked.day)} Mar ${picked.day} · ${picked.time} PST` : 'Pick a slot →'}
+                  </div>
+                  <div className="cs-sub">20 minutes · video call</div>
+                </div>
+                <Btn primary icon="→" onClick={() => setBooked(true)}>
+                  Book the call
+                </Btn>
+              </>
+            )}
           </div>
         </div>
       </section>
@@ -181,19 +197,19 @@ function ContactPage({ setPage }) {
           <span>or — skip the form</span>
         </div>
         <div className="direct-grid">
-          <a className="direct-card" href="mailto:contact.me@studios71.com" style={{ '--dc-color': S71.yellow }}>
+          <a className="direct-card" href="mailto:contact.me@studios71.com" style={{ '--dc-color': '#E2A228' }}>
             <div className="dc-glyph">✉</div>
             <div className="dc-name">Email</div>
             <div className="dc-handle">contact.me@studios71.com</div>
             <div className="dc-cta">Open ↗</div>
           </a>
-          <a className="direct-card" href="#" style={{ '--dc-color': '#0a66c2' }}>
+          <a className="direct-card" href="https://linkedin.com/in/dakottabhatti" target="_blank" rel="noopener noreferrer" style={{ '--dc-color': '#0a66c2' }}>
             <div className="dc-glyph">in</div>
             <div className="dc-name">LinkedIn</div>
             <div className="dc-handle">@dakottabhatti</div>
             <div className="dc-cta">Message ↗</div>
           </a>
-          <a className="direct-card" href="#" style={{ '--dc-color': '#FF0033' }}>
+          <a className="direct-card" href="https://youtube.com/@Studios-71" target="_blank" rel="noopener noreferrer" style={{ '--dc-color': '#FF0033' }}>
             <div className="dc-glyph">▶</div>
             <div className="dc-name">YouTube</div>
             <div className="dc-handle">@Studios-71</div>
@@ -388,6 +404,10 @@ function ContactPage({ setPage }) {
           font-weight: 600;
         }
         .no-slots { font-size: 13px; color: rgba(255,255,255,0.4); padding: 8px 0; }
+        .cal-booked {
+          padding: 12px 0;
+        }
+        .cal-booked .cs-line { color: var(--yellow); }
 
         .cal-summary {
           margin-top: 24px;

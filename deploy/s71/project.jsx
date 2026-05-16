@@ -40,24 +40,29 @@ function ProjectPage({ setPage, projectId, setProject }) {
               </div>
               <div>
                 <dt>Client</dt>
-                <dd>{p.id === 's71' ? 'Self / Studio 71' : p.id === 'smartcity' ? 'WSUV — Class brief' : 'Self-initiated'}</dd>
+                <dd>{p.client}</dd>
               </div>
               <div>
                 <dt>Tools</dt>
-                <dd>Adobe CC, Figma, After FX</dd>
+                <dd>{p.tools}</dd>
               </div>
               <div>
                 <dt>Year</dt>
                 <dd>{p.year}</dd>
               </div>
-              <div>
-                <dt>Live link</dt>
-                <dd><a href="#">View ↗</a></dd>
-              </div>
+              {p.liveUrl && (
+                <div>
+                  <dt>Live link</dt>
+                  <dd><a href={p.liveUrl} target="_blank" rel="noopener noreferrer">View ↗</a></dd>
+                </div>
+              )}
             </dl>
 
             <div className="project-cta">
-              <Btn primary icon="↗">View live</Btn>
+              {p.liveUrl
+                ? <Btn primary icon="↗" onClick={() => window.open(p.liveUrl, '_blank', 'noopener,noreferrer')}>View live</Btn>
+                : <Btn primary icon="↗" style={{ opacity: 0.45, pointerEvents: 'none' }}>No live link</Btn>
+              }
               <Btn secondary icon="↓">Spec sheet</Btn>
             </div>
 
@@ -73,7 +78,7 @@ function ProjectPage({ setPage, projectId, setProject }) {
         </aside>
 
         {/* REEL — scrolling image column ────────────────────────── */}
-        <main className="project-reel">
+        <div className="project-reel">
           {/* hero plate */}
           <div className="reel-hero">
             <Thumb project={p} ratio="16/9" large />
@@ -167,7 +172,7 @@ function ProjectPage({ setPage, projectId, setProject }) {
               <div className="un-title">{next.title}</div>
             </button>
           </div>
-        </main>
+        </div>
       </div>
 
       <style>{`

@@ -1,18 +1,5 @@
 // s71-shared.jsx — design tokens, nav, footer, shared components
 
-const S71 = {
-  purple: '#211451',
-  purpleDeep: '#15093a',
-  purpleLight: '#3a2b78',
-  yellow: '#E2A228',
-  yellowLight: '#f3c25e',
-  coral: '#ED3D35',
-  white: '#ffffff',
-  grey: '#767676',
-  greyLight: '#a8a8a8',
-  paper: '#f4f3ef',
-};
-
 const CATS = [
   { k: '01', slug: 'web', t: 'Web Dev & Design',  s: 'Responsive sites · custom code · CMS',          color: '#3a2b78' },
   { k: '02', slug: 'graphic', t: 'Graphic Design', s: 'Logos · posters · brand systems · print',      color: '#E2A228' },
@@ -22,15 +9,15 @@ const CATS = [
 ];
 
 const PROJECTS = [
-  { id: 's71',     title: 'Studio 71',           kind: 'Brand Guidelines',   cat: 'graphic', year: 2025, featured: true, accent: S71.yellow,  blurb: 'Identity, system, and guidelines for my own studio.' },
-  { id: 'lamk3',   title: 'L.A. mkIII',          kind: 'Short Film',         cat: 'video',   year: 2025, featured: true, accent: '#a8a8a8',   blurb: 'Studio 71 vlog series — pilot episode.' },
-  { id: 'sfgiants',title: 'SF Giants Fan Fest',  kind: 'Animated Poster',    cat: 'graphic', year: 2024, accent: S71.coral,                   blurb: 'A poster that moves — printed and digital.' },
-  { id: 'bizybee', title: 'Bizy Bee',            kind: 'Logo & Identity',    cat: 'graphic', year: 2024, accent: S71.yellow,                  blurb: 'A tiny mark with a lot of buzz.' },
-  { id: 'smartcity',title:'Smart City Proposal', kind: 'Narrative Site',     cat: 'web',     year: 2024, accent: '#5b8def',                   blurb: 'Long-form proposal site for a connected city.' },
-  { id: 'chai',    title: 'Chai Recipe',         kind: 'Recipe Site',        cat: 'web',     year: 2024, accent: '#c97a3a',                   blurb: 'A warm little single-page site for a family recipe.' },
-  { id: 'blackbird',title:'Blackbird Poem',      kind: 'Poem Site',          cat: 'web',     year: 2024, accent: '#3a2b78',                   blurb: 'Wallace Stevens, in thirteen scrolling stanzas.' },
-  { id: 'clone',   title: 'Best Clone Trooper',  kind: 'Info Card',          cat: 'web',     year: 2023, accent: '#5b8def',                   blurb: 'A persuasive info-card. Settles a debate.' },
-  { id: 'lego',    title: 'Lego Benefits',       kind: 'Infographic',        cat: 'graphic', year: 2024, accent: S71.coral,                   blurb: 'Why building Legos is good for you, charted.' },
+  { id: 's71',     title: 'Studio 71',           kind: 'Brand Guidelines',   cat: 'graphic', year: 2025, featured: true, accent: '#E2A228',   blurb: 'Identity, system, and guidelines for my own studio.',          client: 'Self / Studio 71',       tools: 'Illustrator, InDesign, Figma',         liveUrl: null },
+  { id: 'lamk3',   title: 'L.A. mkIII',          kind: 'Short Film',         cat: 'video',   year: 2025, featured: true, accent: '#a8a8a8',   blurb: 'Studio 71 vlog series — pilot episode.',                       client: 'Self / Studio 71',       tools: 'Premiere Pro, After Effects, DaVinci', liveUrl: 'https://youtube.com/@Studios-71' },
+  { id: 'sfgiants',title: 'SF Giants Fan Fest',  kind: 'Animated Poster',    cat: 'graphic', year: 2024, accent: '#ED3D35',                   blurb: 'A poster that moves — printed and digital.',                   client: 'Self-initiated',         tools: 'Illustrator, After Effects',           liveUrl: null },
+  { id: 'bizybee', title: 'Bizy Bee',            kind: 'Logo & Identity',    cat: 'graphic', year: 2024, accent: '#E2A228',                   blurb: 'A tiny mark with a lot of buzz.',                              client: 'Self-initiated',         tools: 'Illustrator, Photoshop',               liveUrl: null },
+  { id: 'smartcity',title:'Smart City Proposal', kind: 'Narrative Site',     cat: 'web',     year: 2024, accent: '#5b8def',                   blurb: 'Long-form proposal site for a connected city.',                client: 'WSUV — Class brief',     tools: 'HTML/CSS, WordPress, Figma',           liveUrl: null },
+  { id: 'chai',    title: 'Chai Recipe',         kind: 'Recipe Site',        cat: 'web',     year: 2024, accent: '#c97a3a',                   blurb: 'A warm little single-page site for a family recipe.',          client: 'Self-initiated',         tools: 'HTML/CSS, JavaScript',                 liveUrl: null },
+  { id: 'blackbird',title:'Blackbird Poem',      kind: 'Poem Site',          cat: 'web',     year: 2024, accent: '#3a2b78',                   blurb: 'Wallace Stevens, in thirteen scrolling stanzas.',              client: 'WSUV — Class brief',     tools: 'HTML/CSS, JavaScript',                 liveUrl: null },
+  { id: 'clone',   title: 'Best Clone Trooper',  kind: 'Info Card',          cat: 'web',     year: 2023, accent: '#5b8def',                   blurb: 'A persuasive info-card. Settles a debate.',                    client: 'Self-initiated',         tools: 'HTML/CSS',                             liveUrl: null },
+  { id: 'lego',    title: 'Lego Benefits',       kind: 'Infographic',        cat: 'graphic', year: 2024, accent: '#ED3D35',                   blurb: 'Why building Legos is good for you, charted.',                 client: 'WSUV — Class brief',     tools: 'Illustrator, InDesign',                liveUrl: null },
 ];
 
 const NAV_PAGES = [
@@ -98,10 +85,10 @@ function Footer({ setPage }) {
         </div>
         <div>
           <div className="s71-footer-head">Elsewhere</div>
-          <a className="s71-footer-link" href="#">YouTube · @Studios-71 ↗</a>
-          <a className="s71-footer-link" href="#">LinkedIn ↗</a>
-          <a className="s71-footer-link" href="#">Vimeo ↗</a>
-          <a className="s71-footer-link" href="#">contact.me@studios71.com</a>
+          <a className="s71-footer-link" href="https://youtube.com/@Studios-71" target="_blank" rel="noopener noreferrer">YouTube · @Studios-71 ↗</a>
+          <a className="s71-footer-link" href="https://linkedin.com/in/dakottabhatti" target="_blank" rel="noopener noreferrer">LinkedIn ↗</a>
+          <a className="s71-footer-link" href="https://vimeo.com" target="_blank" rel="noopener noreferrer">Vimeo ↗</a>
+          <a className="s71-footer-link" href="mailto:contact.me@studios71.com">contact.me@studios71.com</a>
         </div>
       </div>
     </footer>
@@ -153,4 +140,4 @@ function SectionHead({ eyebrow, title, sub, align = 'left' }) {
   );
 }
 
-Object.assign(window, { S71, CATS, PROJECTS, NAV_PAGES, SkipLink, Nav, Footer, Btn, Thumb, CatChip, SectionHead });
+Object.assign(window, { CATS, PROJECTS, NAV_PAGES, SkipLink, Nav, Footer, Btn, Thumb, CatChip, SectionHead });

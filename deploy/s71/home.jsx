@@ -194,12 +194,12 @@ function HomePage({ setPage, setProject }) {
         .s71-hero-feature:hover .arrow { color: var(--yellow); }
         .s71-hero-index {
           position: absolute;
-          top: 80px;
-          right: 56px;
+          bottom: 120px;
+          left: 56px;
           font-size: 11px;
           color: rgba(255,255,255,0.4);
           letter-spacing: 0.16em;
-          text-align: right;
+          text-align: left;
           line-height: 1.7;
         }
         @media (max-width: 880px) {
