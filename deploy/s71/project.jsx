@@ -61,7 +61,7 @@ function ProjectPage({ setPage, projectId, setProject }) {
             <div className="project-cta">
               {p.liveUrl
                 ? <Btn primary icon="↗" onClick={() => window.open(p.liveUrl, '_blank', 'noopener,noreferrer')}>View live</Btn>
-                : <Btn primary icon="↗" style={{ opacity: 0.45, pointerEvents: 'none' }}>No live link</Btn>
+                : <Btn primary icon="↗" style={{ opacity: 0.45 }} aria-disabled="true" onClick={e => e.preventDefault()}>No live link</Btn>
               }
               <Btn secondary icon="↓">Spec sheet</Btn>
             </div>
@@ -69,10 +69,18 @@ function ProjectPage({ setPage, projectId, setProject }) {
             <div className="project-share">
               <span className="share-label" aria-hidden="true">Share →</span>
               <span className="sr-only">Share this project:</span>
-              <button aria-label="Share on X (Twitter)">𝕏</button>
-              <button aria-label="Share on LinkedIn">in</button>
-              <button aria-label="Share via email">✉</button>
-              <button aria-label="Copy link">⌘C</button>
+              <button
+                aria-label="Share on X (Twitter)"
+                onClick={() => window.open(`https://x.com/intent/tweet?text=${encodeURIComponent(p.title + ' — Studio 71')}`, '_blank', 'noopener,noreferrer')}>𝕏</button>
+              <button
+                aria-label="Share on LinkedIn"
+                onClick={() => window.open(`https://linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(window.location.href)}`, '_blank', 'noopener,noreferrer')}>in</button>
+              <button
+                aria-label="Share via email"
+                onClick={() => { window.location.href = `mailto:?subject=${encodeURIComponent(p.title + ' — Studio 71')}&body=${encodeURIComponent(window.location.href)}`; }}>✉</button>
+              <button
+                aria-label="Copy link to clipboard"
+                onClick={() => navigator.clipboard && navigator.clipboard.writeText(window.location.href)}>⌘C</button>
             </div>
           </div>
         </aside>
@@ -89,7 +97,7 @@ function ProjectPage({ setPage, projectId, setProject }) {
 
           {/* paragraph */}
           <div className="reel-prose">
-            <h3 className="s71-h3">{p.id === 's71' ? 'A studio of one, with a system that scales.' : 'A short story about the work.'}</h3>
+            <h2 className="s71-h3">{p.id === 's71' ? 'A studio of one, with a system that scales.' : 'A short story about the work.'}</h2>
             <p>
               {p.id === 's71'
                 ? "Studio 71 began in 2023 as a YouTube channel and a Saturday-morning side project. By 2025 it needed a real brand — one I could use for client work, for the channel, and for the print spreads I keep dreaming about."

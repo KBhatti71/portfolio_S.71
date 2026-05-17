@@ -71,23 +71,28 @@ function Footer({ setPage }) {
           </div>
         </div>
         <div>
-          <div className="s71-footer-head">Pages</div>
-          {NAV_PAGES.map(p => (
-            <button key={p.id} className="s71-footer-link" onClick={() => setPage(p.id)}>{p.label}</button>
-          ))}
+          <div className="s71-footer-head" id="footer-pages-label">Pages</div>
+          <nav aria-labelledby="footer-pages-label">
+            {NAV_PAGES.map(p => (
+              <a key={p.id} className="s71-footer-link" href="#"
+                onClick={e => { e.preventDefault(); setPage(p.id); }}>{p.label}</a>
+            ))}
+          </nav>
         </div>
         <div>
-          <div className="s71-footer-head">Disciplines</div>
-          {CATS.map(c => (
-            <button key={c.slug} className="s71-footer-link"
-              onClick={() => setPage('portfolio')}>{c.t}</button>
-          ))}
+          <div className="s71-footer-head" id="footer-disc-label">Disciplines</div>
+          <nav aria-labelledby="footer-disc-label">
+            {CATS.map(c => (
+              <a key={c.slug} className="s71-footer-link" href="#"
+                onClick={e => { e.preventDefault(); setPage('portfolio'); }}>{c.t}</a>
+            ))}
+          </nav>
         </div>
         <div>
           <div className="s71-footer-head">Elsewhere</div>
-          <a className="s71-footer-link" href="https://youtube.com/@Studios-71" target="_blank" rel="noopener noreferrer">YouTube · @Studios-71 ↗</a>
-          <a className="s71-footer-link" href="https://linkedin.com/in/dakottabhatti" target="_blank" rel="noopener noreferrer">LinkedIn ↗</a>
-          <a className="s71-footer-link" href="https://vimeo.com" target="_blank" rel="noopener noreferrer">Vimeo ↗</a>
+          <a className="s71-footer-link" href="https://youtube.com/@Studios-71" target="_blank" rel="noopener noreferrer" aria-label="YouTube · @Studios-71 (opens in new tab)">YouTube · @Studios-71 ↗</a>
+          <a className="s71-footer-link" href="https://linkedin.com/in/dakottabhatti" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn (opens in new tab)">LinkedIn ↗</a>
+          <a className="s71-footer-link" href="https://vimeo.com" target="_blank" rel="noopener noreferrer" aria-label="Vimeo (opens in new tab)">Vimeo ↗</a>
           <a className="s71-footer-link" href="mailto:contact.me@studios71.com">contact.me@studios71.com</a>
         </div>
       </div>

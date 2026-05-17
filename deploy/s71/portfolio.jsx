@@ -4,12 +4,26 @@ const _portKey = (fn) => (e) => { if (e.key === 'Enter' || e.key === ' ') { e.pr
 
 function PortfolioPage({ setPage, setProject }) {
   const [openDoor, setOpenDoor] = React.useState(null);
+  const drawerRefs = React.useRef({});
 
   const projectsByCategory = (() => {
     const map = {};
     CATS.forEach(c => { map[c.slug] = PROJECTS.filter(p => p.cat === c.slug); });
     return map;
   })();
+
+  const toggleDoor = (slug) => {
+    const wasOpen = openDoor === slug;
+    setOpenDoor(wasOpen ? null : slug);
+    if (!wasOpen) {
+      // Move focus into drawer after render
+      requestAnimationFrame(() => {
+        const drawer = drawerRefs.current[slug];
+        const first = drawer && drawer.querySelector('button, a, [tabindex]');
+        if (first) first.focus();
+      });
+    }
+  };
 
   return (
     <div className="s71-page portfolio">
@@ -38,31 +52,42 @@ function PortfolioPage({ setPage, setProject }) {
               <div key={c.slug}
                 className={`door ${isOpen ? 'open' : ''} ${i === 4 ? 'span-wide' : ''}`}
                 style={{ '--door-color': c.color }}>
-                <button className="door-face" onClick={() => setOpenDoor(isOpen ? null : c.slug)}>
-                  <div className="door-k">{c.k}</div>
+                <button
+                  className="door-face"
+                  aria-expanded={isOpen}
+                  aria-controls={`drawer-${c.slug}`}
+                  onClick={() => toggleDoor(c.slug)}>
+                  <div className="door-k" aria-hidden="true">{c.k}</div>
                   <div className="door-title">{c.t}</div>
                   <div className="door-sub">{c.s}</div>
                   <div className="door-count">
                     <span>{projs.length} {projs.length === 1 ? 'project' : 'projects'}</span>
-                    <span className="door-toggle">{isOpen ? 'close ✕' : 'enter →'}</span>
+                    <span className="door-toggle" aria-hidden="true">{isOpen ? 'close ✕' : 'enter →'}</span>
                   </div>
                 </button>
-                {isOpen && (
-                  <div className="door-drawer">
+                <div
+                  id={`drawer-${c.slug}`}
+                  className={`door-drawer${isOpen ? '' : ' door-drawer--closed'}`}
+                  role="region"
+                  aria-label={`${c.t} projects`}
+                  aria-hidden={!isOpen}
+                  ref={el => drawerRefs.current[c.slug] = el}>
+                  {isOpen && (
                     <div className="door-projects">
                       {projs.map(p => (
                         <button key={p.id} className="door-project"
+                          aria-label={`View ${p.title} — ${p.kind}, ${p.year}`}
                           onClick={() => { setProject(p.id); setPage('project'); }}>
                           <Thumb project={p} ratio="16/9" />
-                          <div className="dp-meta">
+                          <div className="dp-meta" aria-hidden="true">
                             <div className="dp-title">{p.title}</div>
                             <div className="dp-kind">{p.kind} · {p.year}</div>
                           </div>
                         </button>
                       ))}
                     </div>
-                  </div>
-                )}
+                  )}
+                </div>
               </div>
             );
           })}
@@ -171,10 +196,8 @@ function PortfolioPage({ setPage, setProject }) {
           color: var(--door-color);
           font-weight: 500;
         }
-        .door-drawer {
-          padding: 0 36px 32px;
-          animation: drawer .35s var(--ease) both;
-        }
+        .door-drawer { padding: 0 36px 32px; animation: drawer .35s var(--ease) both; }
+        .door-drawer--closed { display: none; }
         @keyframes drawer {
           from { opacity: 0; transform: translateY(-8px); max-height: 0; }
           to { opacity: 1; transform: translateY(0); max-height: 800px; }

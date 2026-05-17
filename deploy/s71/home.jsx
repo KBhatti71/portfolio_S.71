@@ -13,6 +13,10 @@ function HomePage({ setPage, setProject }) {
           <div className="s71-hero-availability">
             <span className="dot" /> Open for work — Spring 2026
           </div>
+          <div className="s71-hero-index" aria-hidden="true">
+            <div>VOL. 03</div>
+            <div>2026 / WA</div>
+          </div>
         </div>
 
         <h1 className="s71-h1 s71-hero-name">
@@ -47,11 +51,6 @@ function HomePage({ setPage, setProject }) {
           </div>
         </div>
 
-        {/* corner indices */}
-        <div className="s71-hero-index" aria-hidden>
-          <div>VOL. 03</div>
-          <div>2026 / WA</div>
-        </div>
       </section>
 
       {/* DISCIPLINES STRIP ────────────────────────────────────────── */}
@@ -124,12 +123,14 @@ function HomePage({ setPage, setProject }) {
           min-height: calc(100vh - 80px);
         }
         .s71-hero-meta {
-          display: flex;
-          justify-content: space-between;
+          display: grid;
+          grid-template-columns: 1fr auto 1fr;
           align-items: center;
           margin-bottom: 56px;
         }
         .s71-hero-meta .s71-eyebrow { margin-bottom: 0; }
+        .s71-hero-meta .s71-hero-availability { justify-self: center; }
+        .s71-hero-meta .s71-hero-index { justify-self: end; }
         .s71-hero-availability {
           display: inline-flex; align-items: center; gap: 8px;
           font-size: 13px;
@@ -193,14 +194,12 @@ function HomePage({ setPage, setProject }) {
         }
         .s71-hero-feature:hover .arrow { color: var(--yellow); }
         .s71-hero-index {
-          position: absolute;
-          bottom: 120px;
-          left: 56px;
           font-size: 11px;
           color: rgba(255,255,255,0.4);
           letter-spacing: 0.16em;
-          text-align: left;
+          text-align: right;
           line-height: 1.7;
+          margin-left: auto;
         }
         @media (max-width: 880px) {
           .home .s71-hero { padding: 48px 22px 64px; }

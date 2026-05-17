@@ -130,14 +130,15 @@ function AboutPage({ setPage }) {
           {PLATFORMS.map(p => (
             <a key={p.name} className="platform-card" href={p.url}
               target="_blank" rel="noopener noreferrer"
+              aria-label={`${p.name} — ${p.handle} — ${p.tag} (opens in new tab)`}
               style={{ '--platform-color': p.color }}>
-              <div className="platform-icon">{p.name.slice(0, 2).toUpperCase()}</div>
-              <div className="platform-meta">
+              <div className="platform-icon" aria-hidden="true">{p.name.slice(0, 2).toUpperCase()}</div>
+              <div className="platform-meta" aria-hidden="true">
                 <div className="platform-name">{p.name}</div>
                 <div className="platform-handle">{p.handle}</div>
                 <div className="platform-tag">{p.tag}</div>
               </div>
-              <div className="platform-arrow">↗</div>
+              <div className="platform-arrow" aria-hidden="true">↗</div>
             </a>
           ))}
         </div>
@@ -219,7 +220,7 @@ function AboutPage({ setPage }) {
         .portrait-label {
           position: absolute;
           bottom: 18px; left: 18px;
-          color: rgba(255,255,255,0.6);
+          color: rgba(255,255,255,0.82);
           font-size: 11px;
         }
         .portrait-meta {
@@ -227,15 +228,15 @@ function AboutPage({ setPage }) {
           font-size: 13px;
           line-height: 1.7;
         }
-        .portrait-meta .dim { color: rgba(255,255,255,0.5); }
+        .portrait-meta .dim { color: rgba(255,255,255,0.75); }
         .intro p {
           font-size: 16px;
           line-height: 1.7;
-          color: rgba(255,255,255,0.78);
+          color: rgba(255,255,255,0.88);
           margin: 0 0 16px;
           max-width: 60ch;
         }
-        .intro-lede { font-size: 19px !important; color: rgba(255,255,255,0.92) !important; font-weight: 500; }
+        .intro-lede { font-size: 19px !important; color: rgba(255,255,255,0.96) !important; font-weight: 500; }
         .intro .hl { background: linear-gradient(180deg, transparent 60%, rgba(226,162,40,0.4) 60%); padding: 0 2px; }
         .intro-ctas { display: flex; gap: 12px; margin-top: 12px; flex-wrap: wrap; }
 
@@ -269,7 +270,7 @@ function AboutPage({ setPage }) {
           width: 80px;
           font-family: var(--display);
           font-size: 14px;
-          color: rgba(255,255,255,0.55);
+          color: rgba(255,255,255,0.82);
           text-align: right;
           letter-spacing: 0.04em;
         }
@@ -287,10 +288,10 @@ function AboutPage({ setPage }) {
         .tl-event.kind-note .tl-dot { background: rgba(255,255,255,0.35); }
         .tl-event.kind-note .tl-card { opacity: 0.65; }
         .tl-tag {
-          font-size: 10px;
+          font-size: 11px;
           letter-spacing: 0.14em;
           text-transform: uppercase;
-          color: rgba(255,255,255,0.5);
+          color: rgba(255,255,255,0.75);
           margin-bottom: 6px;
         }
         .tl-label {
@@ -301,7 +302,7 @@ function AboutPage({ setPage }) {
         }
         .tl-place {
           font-size: 13px;
-          color: rgba(255,255,255,0.55);
+          color: rgba(255,255,255,0.82);
           margin-top: 4px;
         }
         @media (max-width: 720px) {
@@ -374,9 +375,9 @@ function AboutPage({ setPage }) {
           color: var(--white);
         }
         .platform-name { font-family: var(--display); font-weight: 700; font-size: 15px; }
-        .platform-handle { font-size: 12px; color: rgba(255,255,255,0.65); margin-top: 2px; }
-        .platform-tag { font-size: 11px; color: rgba(255,255,255,0.4); letter-spacing: 0.08em; text-transform: uppercase; margin-top: 4px; }
-        .platform-arrow { color: rgba(255,255,255,0.4); font-size: 18px; }
+        .platform-handle { font-size: 12px; color: rgba(255,255,255,0.88); margin-top: 2px; }
+        .platform-tag { font-size: 11px; color: rgba(255,255,255,0.75); letter-spacing: 0.08em; text-transform: uppercase; margin-top: 4px; }
+        .platform-arrow { color: rgba(255,255,255,0.82); font-size: 18px; }
         .platform-card:hover .platform-arrow { color: var(--platform-color); }
 
         /* INDEX CARDS */
@@ -414,12 +415,12 @@ function AboutPage({ setPage }) {
           font-size: 28px;
           line-height: 1.05;
         }
-        .ix-foot { font-size: 11px; color: var(--grey); margin-top: auto; }
+        .ix-foot { font-size: 11px; color: #595959; margin-top: auto; }
         .ix-card.list ul { margin: 0; padding: 0; list-style: none; font-size: 13px; line-height: 1.7; }
         .ix-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: auto; }
         .ix-stats > div { display: flex; flex-direction: column; }
         .ix-stats b { font-family: var(--display); font-size: 24px; line-height: 1; }
-        .ix-stats span { font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--grey); margin-top: 2px; }
+        .ix-stats span { font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: #595959; margin-top: 2px; }
       `}</style>
     </div>
   );

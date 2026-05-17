@@ -71,21 +71,25 @@ function ContactPage({ setPage }) {
             </div>
           </div>
 
-          <label className="field">
-            <span className="field-label">Your name</span>
+          <div className="field">
+            <label className="field-label" htmlFor="contact-name">Your name</label>
             <input className="field-input"
+              id="contact-name"
               type="text" placeholder="Jane Designer"
+              autoComplete="name"
               value={form.name}
               onChange={e => setForm(f => ({ ...f, name: e.target.value }))} />
-          </label>
+          </div>
 
-          <label className="field">
-            <span className="field-label">Company / project</span>
+          <div className="field">
+            <label className="field-label" htmlFor="contact-company">Company / project</label>
             <input className="field-input"
+              id="contact-company"
               type="text" placeholder="Acme Inc · a new identity"
+              autoComplete="organization"
               value={form.company}
               onChange={e => setForm(f => ({ ...f, company: e.target.value }))} />
-          </label>
+          </div>
 
           <div className="field">
             <span className="field-label" id="kind-label">Project kind</span>
@@ -101,14 +105,15 @@ function ContactPage({ setPage }) {
             </div>
           </div>
 
-          <label className="field">
-            <span className="field-label">A short note</span>
+          <div className="field">
+            <label className="field-label" htmlFor="contact-message">A short note</label>
             <textarea className="field-input textarea"
+              id="contact-message"
               rows={4}
               placeholder="A few sentences about the project, timeline, and what you'd like to chat about."
               value={form.message}
               onChange={e => setForm(f => ({ ...f, message: e.target.value }))} />
-          </label>
+          </div>
         </div>
 
         {/* CALENDAR ──────────────────────────────────────────── */}
